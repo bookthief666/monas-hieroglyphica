@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #22170f;
+  background: #15110c;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top left, rgba(205, 168, 96, 0.24), transparent 34rem),
+    radial-gradient(circle at bottom right, rgba(66, 38, 15, 0.36), transparent 28rem),
+    #15110c;
+}
+
+::selection {
+  background: rgba(191, 147, 71, 0.45);
+}
+
+.parchment {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0)),
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.45), transparent 18rem),
+    #f2e5c8;
+  box-shadow:
+    inset 0 0 80px rgba(92, 53, 19, 0.22),
+    0 18px 60px rgba(0, 0, 0, 0.35);
+}
+
+.engraved-border {
+  border: 1px solid rgba(72, 45, 22, 0.38);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 246, 216, 0.42),
+    0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.latin-caps {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
