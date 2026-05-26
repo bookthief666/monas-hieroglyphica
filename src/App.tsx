@@ -1,4 +1,6 @@
+import AmbientDrone from './components/AmbientDrone';
 import EtchedGlyphOverlay from './components/EtchedGlyphOverlay';
+import FacsimileVeil from './components/FacsimileVeil';
 import LivingMarginalia from './components/LivingMarginalia';
 import ParticleManifestation from './components/ParticleManifestation';
 import SentenceDecoder from './components/SentenceDecoder';
@@ -22,18 +24,20 @@ export default function App() {
         <header className="ritual-frame mb-4 overflow-hidden rounded-[1.8rem] px-5 py-5 sm:px-7 lg:px-9">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="latin-caps text-[0.68rem] font-black text-amber-300/70">Monas Hieroglyphica · Prototype 003</p>
+              <p className="latin-caps text-[0.68rem] font-black text-amber-300/70">Monas Hieroglyphica · Prototype 004</p>
               <h1 className="mt-2 text-4xl font-black tracking-[-0.06em] text-amber-50 drop-shadow-[0_0_28px_rgba(255,187,84,0.16)] sm:text-6xl lg:text-7xl">
                 The Birth of the Monad
               </h1>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-amber-100/70 sm:text-base">
-                Click a sentence and the theorem’s geometry condenses from smoke, then locks into an etched
-                alchemical diagram: not a slide, but a symbolic instrument in motion.
+                Click a sentence: Latin source, smoke, particles, engraved geometry, and optional tone converge into a single operation.
               </p>
             </div>
             <div className="rounded-2xl border border-amber-200/10 bg-black/30 px-4 py-3 text-xs leading-5 text-amber-100/65 shadow-[0_0_34px_rgba(0,0,0,0.45)]">
-              <span className="latin-caps block text-amber-300/70">Active theorem {active.theorem}</span>
-              <span>{active.paraphrase}</span>
+              <div className="flex items-start justify-between gap-3">
+                <span className="latin-caps block text-amber-300/70">Active theorem {active.theorem}</span>
+                <AmbientDrone />
+              </div>
+              <span className="mt-2 block">{active.paraphrase}</span>
             </div>
           </div>
           <SymbolProgress />
@@ -44,9 +48,10 @@ export default function App() {
             <SentenceDecoder />
           </aside>
 
-          <section className="manifestation-stage order-1 min-h-[34rem] overflow-hidden rounded-[2rem] lg:order-2 lg:min-h-[calc(100vh-15rem)]">
+          <section className="manifestation-stage order-1 min-h-[34rem] overflow-hidden rounded-[2rem] lg:sticky lg:top-4 lg:order-2 lg:min-h-[calc(100vh-9rem)]">
             <ParticleManifestation />
             <EtchedGlyphOverlay />
+            <FacsimileVeil />
             <div className="pointer-events-none absolute inset-0 stage-grid" />
             <div className="pointer-events-none absolute inset-0 stage-aura" />
             <div className="pointer-events-none absolute inset-x-5 top-5 flex items-center justify-between text-[0.62rem] font-black tracking-[0.24em] text-amber-200/45 sm:inset-x-7">
