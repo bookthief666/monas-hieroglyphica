@@ -101,6 +101,29 @@ body {
   mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 74%);
 }
 
+.stage-aura {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 199, 91, 0.16), transparent 17rem),
+    conic-gradient(from 120deg at 50% 47%, transparent 0 17%, rgba(255, 228, 162, 0.055) 18% 19%, transparent 20% 52%, rgba(255, 160, 52, 0.052) 54% 55%, transparent 56%);
+  mix-blend-mode: screen;
+  animation: slowTurn 42s linear infinite;
+}
+
+.glyph-label {
+  font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.marginalia-rune {
+  filter: drop-shadow(0 0 10px rgba(255, 200, 97, 0.24));
+  animation-name: marginalFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
 .decoder-scroll,
 .commentary-scroll {
   scrollbar-width: thin;
@@ -119,10 +142,18 @@ body {
 }
 
 @keyframes smokeShift {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(-80px, -120px, 0) scale(1.05);
-  }
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-80px, -120px, 0) scale(1.05); }
+}
+
+@keyframes slowTurn {
+  from { transform: rotate(0deg) scale(1.08); }
+  to { transform: rotate(360deg) scale(1.08); }
+}
+
+@keyframes marginalFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0.08; }
+  30% { opacity: 0.2; }
+  50% { transform: translate3d(14px, -22px, 0) rotate(4deg); opacity: 0.16; }
+  75% { transform: translate3d(-18px, 18px, 0) rotate(-5deg); opacity: 0.12; }
 }
