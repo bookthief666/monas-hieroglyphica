@@ -14,20 +14,25 @@ export default function SymbolProgress() {
   const activeIndex = phases.findIndex((item) => item.id === phase);
 
   return (
-    <nav className="border-b border-stone-800/20 px-4 py-4 sm:px-8" aria-label="Symbolic progress">
-      <ol className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+    <nav className="mt-5 border-t border-amber-100/10 pt-4" aria-label="Symbolic progress">
+      <ol className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         {phases.map((item, index) => {
           const active = index <= activeIndex;
           return (
-            <li key={item.id} className="flex items-center gap-2">
+            <li
+              key={item.id}
+              className={`flex items-center gap-2 rounded-full border px-3 py-2 ${
+                active
+                  ? 'border-amber-300/28 bg-amber-300/[0.085] text-amber-50 shadow-[0_0_20px_rgba(209,121,35,0.12)]'
+                  : 'border-amber-100/8 bg-black/22 text-amber-100/40'
+              }`}
+            >
               <span
-                className={`h-3 w-3 rounded-full border ${
-                  active ? 'border-amber-800 bg-amber-600' : 'border-stone-500/40 bg-stone-400/30'
+                className={`h-2.5 w-2.5 rounded-full ${
+                  active ? 'bg-amber-400 shadow-[0_0_15px_rgba(255,180,63,0.88)]' : 'bg-amber-100/18'
                 }`}
               />
-              <span className={`text-xs font-semibold ${active ? 'text-stone-950' : 'text-stone-500'}`}>
-                {item.label}
-              </span>
+              <span className="text-xs font-bold">{item.label}</span>
             </li>
           );
         })}

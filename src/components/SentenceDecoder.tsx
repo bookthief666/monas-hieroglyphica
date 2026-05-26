@@ -7,12 +7,15 @@ export default function SentenceDecoder() {
   const setPhase = useMonasStore((state) => state.setPhase);
 
   return (
-    <div className="h-full p-4 sm:p-5">
+    <div className="relative h-full p-4 sm:p-5">
       <div className="mb-4">
-        <p className="latin-caps text-xs font-bold text-stone-700">Sentence Decoder</p>
-        <h2 className="mt-1 text-xl font-black text-stone-950">Latin · English · Operation</h2>
+        <p className="latin-caps text-[0.68rem] font-black text-amber-300/62">Sentence Decoder</p>
+        <h2 className="mt-1 text-2xl font-black tracking-tight text-amber-50">Latin · English · Operation</h2>
+        <p className="mt-2 text-xs leading-5 text-amber-100/55">
+          Each tablet is a command: choose a sentence and the diagram condenses from smoke into form.
+        </p>
       </div>
-      <div className="max-h-[70vh] space-y-3 overflow-y-auto pr-1">
+      <div className="decoder-scroll max-h-[70vh] space-y-3 overflow-y-auto pr-1 lg:max-h-[calc(100vh-18rem)]">
         {monasSentences.map((sentence) => {
           const active = sentence.id === activeSentenceId;
           return (
@@ -23,20 +26,28 @@ export default function SentenceDecoder() {
                 setActiveSentence(sentence.id);
                 setPhase(sentence.phase);
               }}
-              className={`w-full rounded-2xl border p-4 text-left transition ${
+              className={`group relative w-full overflow-hidden rounded-2xl border p-4 text-left transition duration-300 ${
                 active
-                  ? 'border-amber-800/60 bg-amber-100/80 shadow-md'
-                  : 'border-stone-800/15 bg-white/35 hover:border-stone-800/35 hover:bg-white/55'
+                  ? 'border-amber-300/52 bg-amber-300/[0.105] shadow-[0_0_34px_rgba(213,118,25,0.24)]'
+                  : 'border-amber-100/10 bg-black/24 hover:border-amber-200/26 hover:bg-amber-200/[0.055]'
               }`}
             >
-              <div className="mb-2 flex items-center justify-between gap-3">
-                <span className="latin-caps text-[0.68rem] font-black text-stone-700">Theorem {sentence.theorem}</span>
-                <span className="rounded-full bg-stone-900/10 px-2 py-0.5 text-[0.65rem] font-bold text-stone-700">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(255,202,117,0.16),transparent_13rem)] opacity-0 transition group-hover:opacity-100" />
+              <div className="relative mb-3 flex items-center justify-between gap-3">
+                <span className="latin-caps text-[0.68rem] font-black text-amber-300/72">Theorem {sentence.theorem}</span>
+                <span className="rounded-full border border-amber-200/12 bg-black/34 px-2 py-0.5 text-[0.65rem] font-bold text-amber-100/62">
                   {sentence.phase}
                 </span>
               </div>
-              <p className="text-xs italic leading-5 text-stone-700">{sentence.latin}</p>
-              <p className="mt-3 text-sm leading-6 text-stone-950">{sentence.english}</p>
+              <p className="relative text-xs italic leading-5 text-amber-100/66">{sentence.latin}</p>
+              <p className="relative mt-3 text-sm leading-6 text-amber-50/88">{sentence.english}</p>
+              <div className="relative mt-3 flex flex-wrap gap-1.5">
+                {sentence.symbols.map((symbol) => (
+                  <span key={symbol} className="rounded-full bg-amber-200/[0.075] px-2 py-0.5 text-[0.62rem] font-bold text-amber-100/52">
+                    {symbol}
+                  </span>
+                ))}
+              </div>
             </button>
           );
         })}
