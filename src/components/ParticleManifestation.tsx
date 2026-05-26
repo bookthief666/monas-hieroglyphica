@@ -270,13 +270,13 @@ export default function ParticleManifestation() {
       canvas.height = Math.floor(height * dpr);
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.min(1900, Math.max(820, Math.floor((width * height) / 620)));
+      const count = Math.min(2100, Math.max(880, Math.floor((width * height) / 560)));
       const targets = buildTargets(mode, width, height, count);
 
       particles = targets.map((target, index) => {
         const fromEdge = Math.random();
-        const x = fromEdge < 0.5 ? randomBetween(-width * 0.2, width * 1.2) : randomBetween(0, width);
-        const y = fromEdge < 0.5 ? randomBetween(0, height) : randomBetween(-height * 0.2, height * 1.2);
+        const x = fromEdge < 0.42 ? randomBetween(-width * 0.2, width * 1.2) : randomBetween(width * 0.22, width * 0.78);
+        const y = fromEdge < 0.42 ? randomBetween(-height * 0.2, height * 1.2) : randomBetween(height * 0.22, height * 0.78);
         return {
           x,
           y,
@@ -292,10 +292,66 @@ export default function ParticleManifestation() {
       });
     };
 
+    const drawConstellations = () => {
+      const cellSize = 28;
+      const cols = Math.ceil(width / cellSize);
+      const rows = Math.ceil(height / cellSize);
+      const grid: Particle[][] = Array.from({ length: cols * rows }, () => []);
+      const maxDistSq = 560;
+
+      for (const particle of particles) {
+        const col = Math.max(0, Math.min(cols - 1, Math.floor(particle.x / cellSize)));
+        const row = Math.max(0, Math.min(rows - 1, Math.floor(particle.y / cellSize)));
+        grid[row * cols + col].push(particle);
+      }
+
+      context.save();
+      context.globalCompositeOperation = 'lighter';
+      context.strokeStyle = 'rgba(255,223,115,0.13)';
+      context.lineWidth = 0.58;
+      context.shadowColor = 'rgba(255,223,115,0.32)';
+      context.shadowBlur = 3;
+      context.beginPath();
+
+      for (let row = 0; row < rows; row += 1) {
+        for (let col = 0; col < cols; col += 1) {
+          const cell = grid[row * cols + col];
+          if (!cell.length) continue;
+          const neighbors = [
+            [row, col],
+            [row, col + 1],
+            [row + 1, col],
+            [row + 1, col + 1],
+            [row + 1, col - 1],
+          ];
+
+          for (const p1 of cell) {
+            for (const [nr, nc] of neighbors) {
+              if (nr < 0 || nr >= rows || nc < 0 || nc >= cols) continue;
+              const neighborCell = grid[nr * cols + nc];
+              for (const p2 of neighborCell) {
+                if (p1 === p2) continue;
+                const dx = p1.x - p2.x;
+                const dy = p1.y - p2.y;
+                const dist = dx * dx + dy * dy;
+                if (dist < maxDistSq && Math.random() > 0.985) {
+                  context.moveTo(p1.x, p1.y);
+                  context.lineTo(p2.x, p2.y);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      context.stroke();
+      context.restore();
+    };
+
     const drawFrame = () => {
       time += 1;
       context.globalCompositeOperation = 'source-over';
-      context.fillStyle = 'rgba(6, 4, 3, 0.19)';
+      context.fillStyle = 'rgba(5, 3, 2, 0.155)';
       context.fillRect(0, 0, width, height);
 
       const mist = context.createRadialGradient(width * 0.5, height * 0.5, 0, width * 0.5, height * 0.5, Math.max(width, height) * 0.72);
@@ -319,15 +375,18 @@ export default function ParticleManifestation() {
         const pulse = 0.65 + Math.sin(time * 0.035 + particle.seed) * 0.35;
         context.beginPath();
         context.fillStyle = `hsla(${particle.hue}, 92%, ${54 + pulse * 20}%, ${particle.alpha * 0.58})`;
+        context.shadowColor = `hsla(${particle.hue}, 92%, 65%, ${particle.alpha * 0.42})`;
+        context.shadowBlur = 5;
         context.arc(particle.x, particle.y, particle.size * (0.78 + pulse * 0.62), 0, Math.PI * 2);
         context.fill();
       }
 
+      drawConstellations();
       raf = requestAnimationFrame(drawFrame);
     };
 
     setup();
-    context.fillStyle = 'rgba(6, 4, 3, 1)';
+    context.fillStyle = 'rgba(5, 3, 2, 1)';
     context.fillRect(0, 0, width, height);
     raf = requestAnimationFrame(drawFrame);
 
